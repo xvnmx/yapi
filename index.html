@@ -1,4 +1,3 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -101,7 +100,6 @@
   const btn2 = document.getElementById("btn2");
   const btn3 = document.getElementById("btn3");
 
-  // Başlangıç durumu: btn1 ve btn3 açık (checked), btn2 kapalı
   btn1.checked = true;
   btn2.checked = false;
   btn3.checked = true;
@@ -110,13 +108,11 @@
     const buttons = [btn1, btn2, btn3];
     const checkedButtons = buttons.filter(b => b.checked);
 
-    // Eğer açık buton sayısı 1'den azsa, açılmayan diğer kapalı butonu aç
     if (checkedButtons.length < 2) {
       const offBtn = buttons.find(b => !b.checked && b !== changedBtn);
       if (offBtn) offBtn.checked = true;
     }
 
-    // Eğer açık buton sayısı 3 ise, diğerlerinden biri kapat
     if (checkedButtons.length > 2) {
       const toTurnOff = buttons.find(b => b !== changedBtn && b.checked);
       if (toTurnOff) toTurnOff.checked = false;
