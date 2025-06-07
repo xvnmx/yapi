@@ -1,0 +1,131 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>iOS Toggle Buttons</title>
+<style>
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+      Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px;
+    background: #f2f2f7;
+    min-height: 100vh;
+  }
+
+  .toggle-container {
+    display: flex;
+    gap: 40px;
+  }
+
+  .toggle {
+    position: relative;
+    width: 50px;
+    height: 30px;
+  }
+
+  .toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: #ccc;
+    border-radius: 34px;
+    transition: background-color 0.3s;
+  }
+
+  .slider::before {
+    position: absolute;
+    content: "";
+    height: 22px;
+    width: 22px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    border-radius: 50%;
+    transition: transform 0.3s;
+  }
+
+  input:checked + .slider {
+    background-color: #4cd964;
+  }
+
+  input:checked + .slider::before {
+    transform: translateX(20px);
+  }
+
+  .label {
+    margin-top: 10px;
+    text-align: center;
+    font-weight: 600;
+    width: 120px;
+  }
+</style>
+</head>
+<body>
+  <div class="toggle-container">
+    <div>
+      <label class="toggle">
+        <input type="checkbox" id="btn1" />
+        <span class="slider"></span>
+      </label>
+      <div class="label">YAPI</div>
+    </div>
+    <div>
+      <label class="toggle">
+        <input type="checkbox" id="btn2" />
+        <span class="slider"></span>
+      </label>
+      <div class="label">ŞAMPİYONLUK</div>
+    </div>
+    <div>
+      <label class="toggle">
+        <input type="checkbox" id="btn3" />
+        <span class="slider"></span>
+      </label>
+      <div class="label">BAŞARILI FUTBOL TAKIMI</div>
+    </div>
+  </div>
+
+<script>
+  const btn1 = document.getElementById("btn1");
+  const btn2 = document.getElementById("btn2");
+  const btn3 = document.getElementById("btn3");
+
+  // Başlangıç durumu: btn1 ve btn3 açık (checked), btn2 kapalı
+  btn1.checked = true;
+  btn2.checked = false;
+  btn3.checked = true;
+
+  function ensureTwoOn(changedBtn) {
+    const buttons = [btn1, btn2, btn3];
+    const checkedButtons = buttons.filter(b => b.checked);
+
+    // Eğer açık buton sayısı 1'den azsa, açılmayan diğer kapalı butonu aç
+    if (checkedButtons.length < 2) {
+      const offBtn = buttons.find(b => !b.checked && b !== changedBtn);
+      if (offBtn) offBtn.checked = true;
+    }
+
+    // Eğer açık buton sayısı 3 ise, diğerlerinden biri kapat
+    if (checkedButtons.length > 2) {
+      const toTurnOff = buttons.find(b => b !== changedBtn && b.checked);
+      if (toTurnOff) toTurnOff.checked = false;
+    }
+  }
+
+  btn1.addEventListener("change", () => ensureTwoOn(btn1));
+  btn2.addEventListener("change", () => ensureTwoOn(btn2));
+  btn3.addEventListener("change", () => ensureTwoOn(btn3));
+</script>
+</body>
+</html>
